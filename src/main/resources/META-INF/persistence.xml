@@ -2,15 +2,19 @@
              xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
              xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_2.xsd">
     <persistence-unit name="hello">
+    <!-- JPA 이름을 무엇으로 할 것인지.-->
         <properties>
-            <!-- 필수 속성 -->
+            <!-- 필수 속성. JPA는 DB를 사용하니 DB 접근 정보를 넣어주어야 한다. -->
             <property name="javax.persistence.jdbc.driver" value="org.h2.Driver"/>
             <property name="javax.persistence.jdbc.user" value="sa"/>
             <property name="javax.persistence.jdbc.password" value=""/>
             <property name="javax.persistence.jdbc.url" value="jdbc:h2:tcp://localhost/~/test"/>
             <property name="hibernate.dialect" value="org.hibernate.dialect.H2Dialect"/>
+            <!-- 데이터베이스 방언임. JPA는 특정 DB에 종속적이지 않게 설게되어 있다. -->
+
             <!-- 옵션 -->
             <property name="hibernate.show_sql" value="true"/>
+            <!-- DB에 쿼리 나가는 것을 볼 것인지. -->
             <property name="hibernate.format_sql" value="true"/>
             <property name="hibernate.use_sql_comments" value="true"/>
             <!--<property name="hibernate.hbm2ddl.auto" value="create" />-->
