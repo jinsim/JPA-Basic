@@ -1,0 +1,32 @@
+package hellojpa;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity // JPA가 관리할 객체
+//@Table(name = "USER") // User 테이블에 저장하고 싶다면
+public class Member {
+
+    @Id // 데이터베이스 PK와 매핑
+    private Long id;
+//    @Column(name = "username") // name 필드를 username 컬럼에 넣고 싶다면.
+    private String name;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+}
