@@ -16,6 +16,9 @@ public class JpaMain {
         tx.begin(); // 트랜젝션 시작
 
         try {
+            /**
+             * JPA를 활용한 CRUD
+             */
             // 저장
 //            Member member = new Member();
 //            member.setId(1L); // Long 값이라 L 붙인 것.
@@ -51,6 +54,27 @@ public class JpaMain {
                     .setFirstResult(5)
                     .setMaxResults(8)
                     .getResultList();
+
+            /**
+             * 영속 컨텍스트
+             */
+
+            // 비영속
+            Member member = new Member();
+            member.setId(100L);
+            member.setName("HelloJPA");
+
+            // 영속
+            em.persist(member);
+
+            // 준영속
+            em.detach(member);
+
+            // 삭제
+            em.remove(member);
+            
+
+
 
 
 
