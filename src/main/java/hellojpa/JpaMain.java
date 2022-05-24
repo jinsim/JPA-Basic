@@ -77,8 +77,8 @@ public class JpaMain {
              * 1차 캐시
              */
             Member member1 = new Member();
-            member.setId("member";
-            member.setName("회원");
+            member1.setId(10L);
+            member1.setName("회원");
 
             // 영속 컨텍스트 내부의 1차 캐시에 저장됨.
             em.persist(member1);
@@ -90,7 +90,22 @@ public class JpaMain {
              * 엔티티 등록.
              * 트랜잭션을 지원하는 쓰기 지연
              */
+            Member a = new Member(150L, "A");
+            Member b = new Member(160L, "B");
 
+            em.persist(a);
+            em.persist(b);
+            // 이때까지는 DB에 저장되는 게 아니라, 영속 컨텍스트에 차곡차곡 엔티티와 쿼리가 쌓인다.
+            // 커밋을 하는 시점에 DB에 쿼리가 날아간다.
+
+            /**
+             * 엔티티 수정
+             * 변경 감지
+             */
+            Member member2 = em.find(Member.class, 150L);
+            member2.setName("ZZZZ");
+
+            
 
 
             tx.commit(); // 트랜젝션 커밋
