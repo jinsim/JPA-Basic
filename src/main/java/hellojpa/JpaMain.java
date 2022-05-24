@@ -72,9 +72,24 @@ public class JpaMain {
 
             // 삭제
             em.remove(member);
-            
 
+            /**
+             * 1차 캐시
+             */
+            Member member1 = new Member();
+            member.setId("member";
+            member.setName("회원");
 
+            // 영속 컨텍스트 내부의 1차 캐시에 저장됨.
+            em.persist(member1);
+
+            // 1차 캐시에서 조회
+            Member findMember1 = em.find(Member.class, "member1");
+
+            /**
+             * 엔티티 등록.
+             * 트랜잭션을 지원하는 쓰기 지연
+             */
 
 
 
