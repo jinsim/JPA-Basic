@@ -118,6 +118,14 @@ public class JpaMain {
             // 쿼리를 미리 보고싶거나 DB에 미리 반영하고 싶으면 플러시 강제 호출이 가능하다.
             em.flush();
 
+            /**
+             * 준영속
+             */
+            Member member3 = em.find(Member.class, 150L); // DB 에서 엔티티 가져와서
+            member3.setName("AAA"); // 수정
+
+            em.detach(member3); // 변경사항 반영 안됨. 
+
 
 
             tx.commit(); // 트랜젝션 커밋
