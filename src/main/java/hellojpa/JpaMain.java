@@ -9,6 +9,7 @@ import java.util.List;
 public class JpaMain {
 
     public static void main(String[] args) {
+
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("hello");
         EntityManager em = emf.createEntityManager(); // EntityManager 생성
 
@@ -42,6 +43,7 @@ public class JpaMain {
             /**
              * JPQL
              */
+
             // 전체 회원 조회
             List<Member> result = em.createQuery("select m from Member as m", Member.class)
                     .getResultList(); // JPA는 테이블을 대상으로 코드를 짜지 않는다. Member객체에 대한 코드이다. 대상이 테이블이 아닌 객체임.
@@ -84,7 +86,7 @@ public class JpaMain {
             em.persist(member1);
 
             // 1차 캐시에서 조회
-            Member findMember1 = em.find(Member.class, "member1");
+            Member findMember1 = em.find(Member.class, 10L);
 
             /**
              * 엔티티 등록.
@@ -105,7 +107,17 @@ public class JpaMain {
             Member member2 = em.find(Member.class, 150L);
             member2.setName("ZZZZ");
 
-            
+
+            /**
+             * 플러시
+             */
+            Member member200 = new Member(200L, "member200");
+            em.persist(member200); // member를 영속 컨텍스트에 저장
+
+            // 트랜잭션이 커밋되기 전까지 해당 쿼리를 볼 수 없다.
+            // 쿼리를 미리 보고싶거나 DB에 미리 반영하고 싶으면 플러시 강제 호출이 가능하다.
+            em.flush();
+
 
 
             tx.commit(); // 트랜젝션 커밋
