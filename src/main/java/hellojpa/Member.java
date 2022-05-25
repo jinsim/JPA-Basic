@@ -5,8 +5,11 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+//@Entity(name = "Member") // 클래스 명과 동일한 값이 디폴트로 들어가 있음.
+// 그래서 일반적으로 쓸 일은 없다. 다른 패키지에 같은 이름의 클래스가 있고 둘 다 JPA로 매핑되어 있는 경우에 사용한다.
+// JPA가 내부적으로 구별하는 이름이라고 생각하면 된다.
 @Entity // JPA가 관리할 객체
-//@Table(name = "USER") // User 테이블에 저장하고 싶다면
+//@Table(name = "MBR") // MBR 테이블과 매핑을 한다.
 public class Member {
 
     public Member() {
