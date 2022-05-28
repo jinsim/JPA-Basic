@@ -44,87 +44,87 @@ public class JpaMain {
              * JPQL
              */
 
-            // 전체 회원 조회
-            List<Member> result = em.createQuery("select m from Member as m", Member.class)
-                    .getResultList(); // JPA는 테이블을 대상으로 코드를 짜지 않는다. Member객체에 대한 코드이다. 대상이 테이블이 아닌 객체임.
-            for (Member member : result) {
-                System.out.println("member.name = " + member.getName());
-            }
-
-            // 페이지네이션 가능
-            List<Member> result1 = em.createQuery("select m from Member as m", Member.class)
-                    .setFirstResult(5)
-                    .setMaxResults(8)
-                    .getResultList();
+//            // 전체 회원 조회
+//            List<Member> result = em.createQuery("select m from Member as m", Member.class)
+//                    .getResultList(); // JPA는 테이블을 대상으로 코드를 짜지 않는다. Member객체에 대한 코드이다. 대상이 테이블이 아닌 객체임.
+//            for (Member member : result) {
+//                System.out.println("member.name = " + member.getName());
+//            }
+//
+//            // 페이지네이션 가능
+//            List<Member> result1 = em.createQuery("select m from Member as m", Member.class)
+//                    .setFirstResult(5)
+//                    .setMaxResults(8)
+//                    .getResultList();
 
             /**
              * 영속 컨텍스트
              */
 
-            // 비영속
-            Member member = new Member();
-            member.setId(100L);
-            member.setName("HelloJPA");
-
-            // 영속
-            em.persist(member);
-
-            // 준영속
-            em.detach(member);
-
-            // 삭제
-            em.remove(member);
+//            // 비영속
+//            Member member = new Member();
+//            member.setId(100L);
+//            member.setName("HelloJPA");
+//
+//            // 영속
+//            em.persist(member);
+//
+//            // 준영속
+//            em.detach(member);
+//
+//            // 삭제
+//            em.remove(member);
 
             /**
              * 1차 캐시
              */
-            Member member1 = new Member();
-            member1.setId(10L);
-            member1.setName("회원");
-
-            // 영속 컨텍스트 내부의 1차 캐시에 저장됨.
-            em.persist(member1);
-
-            // 1차 캐시에서 조회
-            Member findMember1 = em.find(Member.class, 10L);
+//            Member member1 = new Member();
+//            member1.setId(10L);
+//            member1.setName("회원");
+//
+//            // 영속 컨텍스트 내부의 1차 캐시에 저장됨.
+//            em.persist(member1);
+//
+//            // 1차 캐시에서 조회
+//            Member findMember1 = em.find(Member.class, 10L);
 
             /**
              * 엔티티 등록.
              * 트랜잭션을 지원하는 쓰기 지연
              */
-            Member a = new Member(150L, "A");
-            Member b = new Member(160L, "B");
-
-            em.persist(a);
-            em.persist(b);
-            // 이때까지는 DB에 저장되는 게 아니라, 영속 컨텍스트에 차곡차곡 엔티티와 쿼리가 쌓인다.
-            // 커밋을 하는 시점에 DB에 쿼리가 날아간다.
+//            Member a = new Member(150L, "A");
+//            Member b = new Member(160L, "B");
+//
+//            em.persist(a);
+//            em.persist(b);
+//            // 이때까지는 DB에 저장되는 게 아니라, 영속 컨텍스트에 차곡차곡 엔티티와 쿼리가 쌓인다.
+//            // 커밋을 하는 시점에 DB에 쿼리가 날아간다.
 
             /**
              * 엔티티 수정
              * 변경 감지
              */
-            Member member2 = em.find(Member.class, 150L);
-            member2.setName("ZZZZ");
+//            Member member2 = em.find(Member.class, 150L);
+//            member2.setName("ZZZZ");
 
 
             /**
              * 플러시
              */
-            Member member200 = new Member(200L, "member200");
-            em.persist(member200); // member를 영속 컨텍스트에 저장
-
-            // 트랜잭션이 커밋되기 전까지 해당 쿼리를 볼 수 없다.
-            // 쿼리를 미리 보고싶거나 DB에 미리 반영하고 싶으면 플러시 강제 호출이 가능하다.
-            em.flush();
-
-            /**
-             * 준영속
-             */
-            Member member3 = em.find(Member.class, 150L); // DB 에서 엔티티 가져와서
-            member3.setName("AAA"); // 수정
-
-            em.detach(member3); // 변경사항 반영 안됨. 
+//            Member member200 = new Member(200L, "member200");
+//            em.persist(member200); // member를 영속 컨텍스트에 저장
+//
+//            // 트랜잭션이 커밋되기 전까지 해당 쿼리를 볼 수 없다.
+//            // 쿼리를 미리 보고싶거나 DB에 미리 반영하고 싶으면 플러시 강제 호출이 가능하다.
+//            em.flush();
+//
+//            /**
+//             * 준영속
+//             */
+//            Member member3 = em.find(Member.class, 150L); // DB 에서 엔티티 가져와서
+//            member3.setName("AAA"); // 수정
+//
+//            em.detach(member3); // 변경사항 반영 안됨.
 
 
 

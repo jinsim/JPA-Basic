@@ -1,9 +1,7 @@
 package hellojpa;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.util.Date;
 
 //@Entity(name = "Member") // 클래스 명과 동일한 값이 디폴트로 들어가 있음.
 // 그래서 일반적으로 쓸 일은 없다. 다른 패키지에 같은 이름의 클래스가 있고 둘 다 JPA로 매핑되어 있는 경우에 사용한다.
@@ -14,19 +12,26 @@ public class Member {
 
     @Id // 데이터베이스 PK와 매핑
     private Long id;
-//    @Column(name = "username") // name 필드를 username 컬럼에 넣고 싶다면.
-    @Column(unique = true, length = 10) // 유저 이름이 유일한 값이고, 10자리가 최대이다.
-    private String name;
+//    @Column(unique = true, length = 10) // 유저 이름이 유일한 값이고, 10자리가 최대이다.최대이다
+    @Column(name = "name")  // username 필드를 name 컬럼에 넣고 싶다면.
+    private String username;
+
+    private Integer age;  // Integer같은 타입도 사용 가능. DB에는 Integer와 가장 적절한 타입으로 들어간다.
+
+    @Enumerated(EnumType.STRING) // Enum도 사용 가능하다.
+    private RoleType roleType;
+
+    @Temporal(TemporalType.TIMESTAMP) // DB에서 날짜 및 시간은, 3가지 케이스 중 선택해서 사용해야 한다.
+    private Date createdDate;
+
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date lastModifiedDate;
+
+    @Lob // VARCHAR를 넘어서는 큰 컨텐츠는 Lob을 사용한다.
+    private String description;
 
     public Member() {
     }
-    // JPA는 내부적으로 리플렉션 등을 사용해야 하므로 동적으로 객체를 생성할 수 있어야 한다.
-    // 아래의 생성자만 있으면 인텔리제이가 에러를 표시하고, 위의 기본 생성자까지 있어야 한다.
-    public Member(Long id, String name) {
-        this.id = id;
-        this.name = name;
-    }
-
 
     public Long getId() {
         return id;
@@ -36,11 +41,58 @@ public class Member {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getUsername() {
+        return username;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setUsername(String username) {
+        this.username = username;
     }
+
+    public Integer getAge() {
+        return age;
+    }
+
+    public void setAge(Integer age) {
+        this.age = age;
+    }
+
+    public RoleType getRoleType() {
+        return roleType;
+    }
+
+    public void setRoleType(RoleType roleType) {
+        this.roleType = roleType;
+    }
+
+    public Date getCreatedDate() {
+        return createdDate;
+    }
+
+    public void setCreatedDate(Date createdDate) {
+        this.createdDate = createdDate;
+    }
+
+    public Date getLastModifiedDate() {
+        return lastModifiedDate;
+    }
+
+    public void setLastModifiedDate(Date lastModifiedDate) {
+        this.lastModifiedDate = lastModifiedDate;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+    //    // JPA는 내부적으로 리플렉션 등을 사용해야 하므로 동적으로 객체를 생성할 수 있어야 한다.
+//    // 아래의 생성자만 있으면 인텔리제이가 에러를 표시하고, 위의 기본 생성자까지 있어야 한다.
+//    public Member(Long id, String name) {
+//        this.id = id;
+//        this.name = name;
+//    }
+
 }
