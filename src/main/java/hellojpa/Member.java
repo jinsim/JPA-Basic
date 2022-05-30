@@ -8,9 +8,17 @@ import java.util.Date;
 // JPA가 내부적으로 구별하는 이름이라고 생각하면 된다.
 @Entity // JPA가 관리할 객체
 //@Table(name = "MBR") // MBR 테이블과 매핑을 한다.
+@SequenceGenerator(
+        name = "MEMBER_SEQ_GENERATOR", // 제너레이터 이름
+        sequenceName = "MEMBER_SEQ", // 매핑할 데이터베이스 시퀀스 이름
+        initialValue = 1, allocationSize = 50 // DB에 50씩 미리 확보해두고 메모리에서 사용한다.
+        // 영속 컨텍스트에 저장하기 위해서는 pk값이 필요하기 때문에. 시퀀스와 테이블 전략에서 사용.
+)
 public class Member {
 
     @Id // 데이터베이스 PK와 매핑
+    @GeneratedValue(strategy = GenerationType.SEQUENCE,
+            generator = "MEMBER_SEQ_GENERATOR") // 제너레이터 이름
     private Long id;
 //    @Column(unique = true, length = 10) // 유저 이름이 유일한 값이고, 10자리가 최대이다.최대이다
     @Column(name = "name")  // username 필드를 name 컬럼에 넣고 싶다면.
