@@ -6,16 +6,12 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
 @Entity
-public class Member {
+public class Team {
 
     @Id
     @GeneratedValue
-    @Column(name = "MEMBER_ID")
+    @Column(name = "TEAM_ID")
     private Long id;
 
-    @Column(name = "USERNAME")
-    private String username;
-
-    @Column(name = "TEAM_ID")
-    private Long teamId; // RDB에 맞춰서 외래키로 모델링
+    private String name;
 }
