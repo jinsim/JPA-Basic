@@ -17,6 +17,41 @@ public class JpaMain {
         tx.begin(); // 트랜젝션 시작
 
         try {
+
+/*  객체의 참조와 테이블의 외래키를 매핑
+            // 팀 저장
+            Team team = new Team();
+            team.setName("TeamA");
+            em.persist(team); // 이때 team의 id가 정해지면서 team이 저장되었음.
+
+            // 회원 저장
+            Member member = new Member();
+            member.setUsername("member1");
+            member.setTeamId(team.getId()); // 객체지향스럽지 않다. setTeam 해야할 거 같다.
+            em.persist(member);
+
+            // 조회
+            Member findMember = em.find(Member.class, member.getId());
+            // 연관관계 없어서 또 find 해야함.
+            Team findTeam = em.find(Team.class, team.getId());
+*/
+            // 팀 저장
+            Team team = new Team();
+            team.setName("TeamA");
+            em.persist(team);
+
+            // 회원 저장
+            Member member = new Member();
+            member.setUsername("member1");
+            member.setTeam(team); // 단방향 연관관계 설정, 참조 저장
+            // JPA가 알아서 team에서 pk 값을 꺼내서, foreign key 값을 넣을 때 사용한다.
+            em.persist(member);
+
+            // 조회
+            Member findMember = em.find(Member.class, member.getId());
+            // em.find를 추가로 할 필요 없이 바로 꺼낼 수 있다.
+            Team findTeam = findMember.getTeam();
+
             /**
              * JPA를 활용한 CRUD
              */
