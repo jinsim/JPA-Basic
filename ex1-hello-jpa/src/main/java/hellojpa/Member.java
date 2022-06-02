@@ -17,7 +17,7 @@ public class Member {
     private Long teamId; // RDB에 맞춰서 외래키로 모델링
 */
 
-    @ManyToOne // 두 클래스의 관계를 JPA에 알려줘야 한다.
+    @ManyToOne
     @JoinColumn(name = "TEAM_ID")
     private Team team;
 
