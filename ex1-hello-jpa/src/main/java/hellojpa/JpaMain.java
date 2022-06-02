@@ -36,16 +36,16 @@ public class JpaMain {
             Team findTeam = em.find(Team.class, team.getId());
 */
 
-            Team team = new Team();
-            team.setName("TeamA");
-            em.persist(team);
 
             Member member = new Member();
-            member.setUsername("member1");
-            member.changeTeam(team);
+            member.setUsername("member");
             em.persist(member);
 
+            Team team = new Team();
+            team.setName("TeamA");
             team.getMembers().add(member);
+
+            em.persist(team);
 
             em.flush();
             em.clear();
