@@ -35,17 +35,28 @@ public class JpaMain {
             // 연관관계 없어서 또 find 해야함.
             Team findTeam = em.find(Team.class, team.getId());
 */
-            // 팀 저장
+
             Team team = new Team();
             team.setName("TeamA");
             em.persist(team);
 
-            // 회원 저장
             Member member = new Member();
             member.setUsername("member1");
-            member.setTeam(team); // 단방향 연관관계 설정, 참조 저장
-            // JPA가 알아서 team에서 pk 값을 꺼내서, foreign key 값을 넣을 때 사용한다.
+            member.setTeam(team);
             em.persist(member);
+
+            team.getMembers().add(member);
+
+            em.flush();
+            em.clear();
+
+            Team findTeam = em.find(Team.class, team.getId());
+            List<Member> members = findTeam.getMembers();
+
+            for (Member m : members) {
+                System.out.println("m = " + m.getUsername());
+            }
+
 
             // 조회
             Member findMember = em.find(Member.class, member.getId());
