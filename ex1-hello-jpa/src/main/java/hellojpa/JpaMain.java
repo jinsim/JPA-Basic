@@ -49,8 +49,12 @@ public class JpaMain {
 
             // 조회
             Member findMember = em.find(Member.class, member.getId());
-            // em.find를 추가로 할 필요 없이 바로 꺼낼 수 있다.
-            Team findTeam = findMember.getTeam();
+            List<Member> members = findMember.getTeam().getMembers();
+
+            for (Member m : members) {
+                System.out.println("m = " + m.getUsername());
+            }
+
 
             /**
              * JPA를 활용한 CRUD
