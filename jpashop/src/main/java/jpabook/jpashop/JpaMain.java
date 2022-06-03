@@ -22,7 +22,7 @@ public class JpaMain {
         try {
 
             Order order = new Order();
-            order.addOrderItem(new OrderItem())
+            order.addOrderItem(new OrderItem());
 
             tx.commit(); // 트랜젝션 커밋
         } catch (Exception e) {

@@ -21,6 +21,10 @@ public class Order {
     @OneToMany(mappedBy = "order")
     private List<OrderItem> orderItems = new ArrayList<>();
 
+    @OneToOne
+    @JoinColumn(name = "DELIVERY_ID")
+    private Delivery delivery;
+
     private LocalDateTime orderDate; // 최신 버전의 하이버네이트에서는 알아서 매핑해준다.
 
     @Enumerated(EnumType.STRING) // ORDINAL 말고 STRING으로 해야 한다.
@@ -69,5 +73,13 @@ public class Order {
     public void addOrderItem(OrderItem orderItem) {
         orderItems.add(orderItem);
         orderItem.setOrder(this);
+    }
+
+    public Delivery getDelivery() {
+        return delivery;
+    }
+
+    public void setDelivery(Delivery delivery) {
+        this.delivery = delivery;
     }
 }
