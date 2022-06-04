@@ -19,26 +19,19 @@ public class JpaMain {
 
         try {
 
-            // 저장
-            Movie movie = new Movie();
-            movie.setDirector("aaa");
-            movie.setActor("bbb");
-            movie.setName("바람");
-            movie.setPrice(1000);
+            Member member = new Member();
+            member.setUsername("hello");
 
-            em.persist(movie);
+            em.persist(member);
 
-            // 1차 캐시 초기화
             em.flush();
             em.clear();
 
-            // DB에서 조회
-//            Movie findMovie = em.find(Movie.class, movie.getId());
-//            System.out.println("findMovie = " + findMovie);
-
-            Item item = em.find(Item.class, movie.getId());
-            System.out.println("item = " + item);
-
+//            Member findMember = em.find(Member.class, member.getId());
+            Member findMember = em.getReference(Member.class, member.getId());
+            System.out.println("findMember = " + findMember.getClass());
+            System.out.println("findMember.id = " + findMember.getId());
+            System.out.println("findMember.username = " + findMember.getUsername());
 
 /*  객체의 참조와 테이블의 외래키를 매핑
             // 팀 저장
@@ -57,29 +50,6 @@ public class JpaMain {
             // 연관관계 없어서 또 find 해야함.
             Team findTeam = em.find(Team.class, team.getId());
 */
-
-
-            Member member = new Member();
-            member.setUsername("member");
-            member.setCreatedBy("kim");
-            member.setCreatedDate(LocalDateTime.now());
-            em.persist(member);
-
-            Team team = new Team();
-            team.setName("TeamA");
-            team.getMembers().add(member);
-
-            em.persist(team);
-
-            em.flush();
-            em.clear();
-
-            Team findTeam = em.find(Team.class, team.getId());
-            List<Member> members = findTeam.getMembers();
-
-            for (Member m : members) {
-                System.out.println("m = " + m.getUsername());
-            }
 
 
 
@@ -204,4 +174,5 @@ public class JpaMain {
 
         emf.close(); // 전체 애플리케이션이 끝나면 entityManagerFactory를 닫아준다.
     }
+
 }

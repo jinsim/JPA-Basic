@@ -1,8 +1,6 @@
 package hellojpa;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
 public class Member extends BaseEntity{
@@ -15,20 +13,9 @@ public class Member extends BaseEntity{
     @Column(name = "USERNAME")
     private String username;
 
-/*    @Column(name = "TEAM_ID")
-    private Long teamId; // RDB에 맞춰서 외래키로 모델링
-*/
-
     @ManyToOne
     @JoinColumn(name = "TEAM_ID", insertable = false, updatable = false)
     private Team team;
-
-    @OneToOne
-    @JoinColumn(name = "LOCKER_ID") // JoinColumn은 넣어주는 것이 좋다. 기본값이 직관적이지 않고 지저분하다.
-    private Locker locker;
-
-    @OneToMany(mappedBy = "member")
-    private List<MemberProduct> memberProducts = new ArrayList<>();
 
     public Long getId() {
         return id;
@@ -54,19 +41,5 @@ public class Member extends BaseEntity{
         this.team = team;
     }
 
-    public Locker getLocker() {
-        return locker;
-    }
 
-    public void setLocker(Locker locker) {
-        this.locker = locker;
-    }
-
-    public List<MemberProduct> getMemberProducts() {
-        return memberProducts;
-    }
-
-    public void setMemberProducts(List<MemberProduct> memberProducts) {
-        this.memberProducts = memberProducts;
-    }
 }
