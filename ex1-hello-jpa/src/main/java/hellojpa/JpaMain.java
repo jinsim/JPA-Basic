@@ -18,6 +18,27 @@ public class JpaMain {
 
         try {
 
+            // 저장
+            Movie movie = new Movie();
+            movie.setDirector("aaa");
+            movie.setActor("bbb");
+            movie.setName("바람");
+            movie.setPrice(1000);
+
+            em.persist(movie);
+
+            // 1차 캐시 초기화
+            em.flush();
+            em.clear();
+
+            // DB에서 조회
+//            Movie findMovie = em.find(Movie.class, movie.getId());
+//            System.out.println("findMovie = " + findMovie);
+
+            Item item = em.find(Item.class, movie.getId());
+            System.out.println("item = " + item);
+
+
 /*  객체의 참조와 테이블의 외래키를 매핑
             // 팀 저장
             Team team = new Team();
