@@ -18,20 +18,32 @@ public class JpaMain {
         tx.begin(); // 트랜젝션 시작
 
         try {
+            Team team1 = new Team();
+            team1.setName("teamA");
+            em.persist(team1);
 
-            Member member = new Member();
-            member.setUsername("hello");
+            Team team2 = new Team();
+            team2.setName("teamB");
+            em.persist(team2);
 
-            em.persist(member);
+            Member member1 = new Member();
+            member1.setUsername("hello1");
+            member1.setTeam(team1);
+            em.persist(member1);
+
+            Member member2 = new Member();
+            member2.setUsername("hello2");
+            member2.setTeam(team2);
+            em.persist(member2);
 
             em.flush();
             em.clear();
 
-//            Member findMember = em.find(Member.class, member.getId());
-            Member findMember = em.getReference(Member.class, member.getId());
-            System.out.println("findMember = " + findMember.getClass());
-            System.out.println("findMember.id = " + findMember.getId());
-            System.out.println("findMember.username = " + findMember.getUsername());
+//            Member m = em.find(Member.class, member1.getId());
+            List<Member> members = em.createQuery("select m from Member m", Member.class).getResultList();
+            System.out.println("members = " + members);
+//            System.out.println("m.getTeam().getClass() = " + m.getTeam().getClass());
+            
 
 /*  객체의 참조와 테이블의 외래키를 매핑
             // 팀 저장
