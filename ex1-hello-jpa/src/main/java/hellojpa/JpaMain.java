@@ -27,8 +27,12 @@ public class JpaMain {
             parent.addChild(child2);
 
             em.persist(parent);
-            em.persist(child1);
-            em.persist(child2);
+
+            em.flush();
+            em.clear();
+
+            Parent findParent = em.find(Parent.class, parent.getId());
+            findParent.getChildList().remove(0);
 
 
 /*  객체의 참조와 테이블의 외래키를 매핑
