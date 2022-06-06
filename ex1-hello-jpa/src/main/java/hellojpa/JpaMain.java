@@ -18,12 +18,23 @@ public class JpaMain {
         tx.begin(); // 트랜젝션 시작
 
         try {
-            Member member = new Member();
-            member.setUsername("hello");
-            member.setHomeAddress(new Address("city", "street", "zipcode"));
-            member.setWorkPeriod(new Period());
+            Address address = new Address("city", "street", "zipcode");
 
-            em.persist(member);
+            Member member1 = new Member();
+            member1.setUsername("member1");
+            member1.setWorkPeriod(new Period());
+            member1.setHomeAddress(address);
+            em.persist(member1);
+
+            Address copyAddress = new Address(address.getCity(), address.getStreet(), address.getZipcode());
+
+            Member member2 = new Member();
+            member2.setUsername("member2");
+            member2.setWorkPeriod(new Period());
+            member2.setHomeAddress(copyAddress);
+            em.persist(member2);
+
+            member1.getHomeAddress().setCity("newCity");
 
 /*  객체의 참조와 테이블의 외래키를 매핑
             // 팀 저장
