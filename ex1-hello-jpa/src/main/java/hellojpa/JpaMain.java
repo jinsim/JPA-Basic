@@ -19,39 +19,14 @@ public class JpaMain {
 
         try {
 
-            Member member = new Member();
-            member.setUsername("member1");
-            member.setHomeAddress(new Address("homeCity", "street", "zipcode"));
+            List<Member> result = em.createQuery(
+                    "select m From Member m where m.username like '%kim%'",
+                    Member.class
+            ).getResultList();
 
-            member.getFavoriteFoods().add("치킨");
-            member.getFavoriteFoods().add("족발");
-            member.getFavoriteFoods().add("피자");
-
-            member.getAddressHistory().add(new AddressEntity("old1", "street", "zipcode"));
-            member.getAddressHistory().add(new AddressEntity("old2", "street", "zipcode"));
-
-            em.persist(member);
-
-            // DB에는 위에 만든 데이터가 들어있고, 영속 컨텍스트를 비움.
-            // 마치 DB에 데이터 있는 상태에서 애플리케이션을 다시 시작하는 것
-            em.flush();
-            em.clear();
-
-            Member findMember = em.find(Member.class, member.getId());
-            System.out.println("===============");
-
-            List<AddressEntity> addressHistory = findMember.getAddressHistory();
-
-            System.out.println("===============");
-            // 값 타입 수정
-            // findMember.getHomeAddress().setCity("newCity"); // 이렇게 교체하면 안됨.
-//            Address a = findMember.getHomeAddress();
-//            findMember.setHomeAddress(new Address("newCity", a.getStreet(), a.getZipcode()));
-
-            // 값 타입 컬렉션 수정
-            // 치킨 -> 한식
-            findMember.getFavoriteFoods().remove("치킨");
-            findMember.getFavoriteFoods().add("치킨");
+            for (Member member : result) {
+                System.out.println("member = " + member);
+            }
 
 // old1 -> new1
 //findMember.getAddressHistory().remove(new AddressEntity("old1", "street", "zipcode"));
