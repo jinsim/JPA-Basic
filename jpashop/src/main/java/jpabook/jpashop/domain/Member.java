@@ -13,9 +13,9 @@ public class Member extends BaseEntity {
     private Long id;
     @Column(length = 10) // 메타데이터를 엔티티 클래스에 그대로 적는 것을 권장한다. 엔티티만 보고도 개발자가 알 수 있기 때문에.
     private String name;
-    private String city;
-    private String street;
-    private String zipcode;
+
+    @Embedded
+    private Address address;
 
     @OneToMany(mappedBy = "member")
     private List<Order> orders = new ArrayList<>();
@@ -36,30 +36,6 @@ public class Member extends BaseEntity {
         this.name = name;
     }
 
-    public String getCity() {
-        return city;
-    }
-
-    public void setCity(String city) {
-        this.city = city;
-    }
-
-    public String getStreet() {
-        return street;
-    }
-
-    public void setStreet(String street) {
-        this.street = street;
-    }
-
-    public String getZipcode() {
-        return zipcode;
-    }
-
-    public void setZipcode(String zipcode) {
-        this.zipcode = zipcode;
-    }
-
     public List<Order> getOrders() {
         return orders;
     }
@@ -68,4 +44,11 @@ public class Member extends BaseEntity {
         this.orders = orders;
     }
 
+    public Address getAddress() {
+        return address;
+    }
+
+    public void setAddress(Address address) {
+        this.address = address;
+    }
 }
