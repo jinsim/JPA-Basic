@@ -18,23 +18,46 @@ public class JpaMain {
         tx.begin(); // 트랜젝션 시작
 
         try {
-            Address address = new Address("city", "street", "zipcode");
 
-            Member member1 = new Member();
-            member1.setUsername("member1");
-            member1.setWorkPeriod(new Period());
-            member1.setHomeAddress(address);
-            em.persist(member1);
+            Member member = new Member();
+            member.setUsername("member1");
+            member.setHomeAddress(new Address("homeCity", "street", "zipcode"));
 
-            Address copyAddress = new Address(address.getCity(), address.getStreet(), address.getZipcode());
+            member.getFavoriteFoods().add("치킨");
+            member.getFavoriteFoods().add("족발");
+            member.getFavoriteFoods().add("피자");
 
-            Member member2 = new Member();
-            member2.setUsername("member2");
-            member2.setWorkPeriod(new Period());
-            member2.setHomeAddress(copyAddress);
-            em.persist(member2);
+            member.getAddressHistory().add(new AddressEntity("old1", "street", "zipcode"));
+            member.getAddressHistory().add(new AddressEntity("old2", "street", "zipcode"));
 
-            member1.getHomeAddress().setCity("newCity");
+            em.persist(member);
+
+            // DB에는 위에 만든 데이터가 들어있고, 영속 컨텍스트를 비움.
+            // 마치 DB에 데이터 있는 상태에서 애플리케이션을 다시 시작하는 것
+            em.flush();
+            em.clear();
+
+            Member findMember = em.find(Member.class, member.getId());
+            System.out.println("===============");
+
+            List<AddressEntity> addressHistory = findMember.getAddressHistory();
+
+            System.out.println("===============");
+            // 값 타입 수정
+            // findMember.getHomeAddress().setCity("newCity"); // 이렇게 교체하면 안됨.
+//            Address a = findMember.getHomeAddress();
+//            findMember.setHomeAddress(new Address("newCity", a.getStreet(), a.getZipcode()));
+
+            // 값 타입 컬렉션 수정
+            // 치킨 -> 한식
+            findMember.getFavoriteFoods().remove("치킨");
+            findMember.getFavoriteFoods().add("치킨");
+
+// old1 -> new1
+//findMember.getAddressHistory().remove(new AddressEntity("old1", "street", "zipcode"));
+// 보통 remove는 내부에서 equals를 사용해서 맞는 객체를 지워주므로, 삭제를 원한다면 똑같은 객체를 만들어서 넣으면 된다.
+//findMember.getAddressHistory().add(new AddressEntity("new1", "street", "zipcode"));
+
 
 /*  객체의 참조와 테이블의 외래키를 매핑
             // 팀 저장
