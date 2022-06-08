@@ -4,6 +4,9 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -19,14 +22,21 @@ public class JpaMain {
 
         try {
 
-            List<Member> result = em.createQuery(
-                    "select m From Member m where m.username like '%kim%'",
-                    Member.class
-            ).getResultList();
+            //Criteria 사용 준비
+            CriteriaBuilder cb = em.getCriteriaBuilder();
+            CriteriaQuery<Member> query = cb.createQuery(Member.class);
 
-            for (Member member : result) {
-                System.out.println("member = " + member);
-            }
+            //루트 클래스 (조회를 시작할 클래스)
+            Root<Member> m = query.from(Member.class);
+
+            //쿼리 생성
+            CriteriaQuery<Member> cq = query.select(m).where(cb.equal(m.get("username"), "kim"));
+            List<Member> resultList = em.createQuery(cq).getResultList();
+
+
+            // 네이티브 SQL
+            em.createNativeQuery("select MEMBER_ID, city, street, zipcode, USERNAME from MEMBER")
+                    .getResultList();
 
 // old1 -> new1
 //findMember.getAddressHistory().remove(new AddressEntity("old1", "street", "zipcode"));
