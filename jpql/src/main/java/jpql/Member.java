@@ -8,7 +8,7 @@ public class Member {
     @Id @GeneratedValue
     private Long id;
     private String username;
-    private String age;
+    private int age;
 
     @ManyToOne
     @JoinColumn(name = "TEAM_ID")
@@ -30,11 +30,11 @@ public class Member {
         this.username = username;
     }
 
-    public String getAge() {
+    public int getAge() {
         return age;
     }
 
-    public void setAge(String age) {
+    public void setAge(int age) {
         this.age = age;
     }
 }
