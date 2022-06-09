@@ -31,12 +31,6 @@ public class JpaMain {
             String query1 = "select m from Member m join m.team t";
             List<Member> result1 = em.createQuery(query1, Member.class)
                     .getResultList();
-            String query2 = "select m from Member m left join m.team t";
-            List<Member> result2 = em.createQuery(query2, Member.class)
-                    .getResultList();
-            String query3 = "select m from Member m, Team t where m.username = t.name";
-            List<Member> result3 = em.createQuery(query3, Member.class)
-                    .getResultList();
 
 
 
