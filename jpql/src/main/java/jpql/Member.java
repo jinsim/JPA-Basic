@@ -14,6 +14,9 @@ public class Member {
     @JoinColumn(name = "TEAM_ID")
     private Team team;
 
+    @Enumerated(EnumType.STRING) // 기본이 ORDINAL 이므로 STRING으로 변경해야 한다.
+    private MemberType type;
+
     public void changeTeam(Team team) {
         this.team = team;
         team.getMembers().add(this);
@@ -56,4 +59,11 @@ public class Member {
         return team;
     }
 
+    public MemberType getType() {
+        return type;
+    }
+
+    public void setType(MemberType type) {
+        this.type = type;
+    }
 }
