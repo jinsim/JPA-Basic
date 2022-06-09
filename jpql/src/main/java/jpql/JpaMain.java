@@ -13,20 +13,27 @@ public class JpaMain {
         tx.begin();
 
         try {
-            Member member = new Member();
-            member.setUsername("member1");
-            member.setAge(10);
-            em.persist(member);
+            for (int i = 0; i < 100; i++) {
+                Member member = new Member();
+                member.setUsername("member" + i);
+                member.setAge(i);
+                em.persist(member);
+            }
 
             em.flush();
             em.clear();
 
-            List<MemberDTO> result = em.createQuery("select new jpql.MemberDTO(m.username, m.age) from Member m", MemberDTO.class)
+            List<Member> result = em.createQuery("select m from Member m order by m.age desc", Member.class)
+                    .setFirstResult(1)
+                    .setMaxResults(10)
                     .getResultList();
+            // 페이징에서는 order by가 들어가야 제대로 되는 지 알 수 있다. 
+            // 왜냐하면 sorting이 되면서 순서대로 가져와야 하므로.
 
-            MemberDTO memberDTO = result.get(0);
-            System.out.println("memberDTO = " + memberDTO.getUsername());
-            System.out.println("memberDTO = " + memberDTO.getAge());
+            System.out.println("result.size = " + result.size());
+            for (Member member1 : result) {
+                System.out.println("member1 = " + member1);
+            }
 
 
             tx.commit();

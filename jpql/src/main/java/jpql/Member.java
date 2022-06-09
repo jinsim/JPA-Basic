@@ -37,4 +37,13 @@ public class Member {
     public void setAge(int age) {
         this.age = age;
     }
+
+    @Override
+    public String toString() { // to String 만들 때 양방향 조심할 것.
+        return "Member{" +
+                "id=" + id +
+                ", username='" + username + '\'' +
+                ", age=" + age +
+                '}';
+    }
 }
