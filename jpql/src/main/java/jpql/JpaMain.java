@@ -41,14 +41,14 @@ public class JpaMain {
             em.flush();
             em.clear();
 
-            List<Member> resultList =
-                    em.createNamedQuery("Member.findByUsername", Member.class)
-                            .setParameter("username", "회원1")
-                            .getResultList();
+            int resultCount = em.createQuery("update Member m set m.age = 20")
+                    .executeUpdate(); // 영향 받은 개수
 
-            for (Member member : resultList) {
-                System.out.println("member = " + member);
-            }
+            em.clear();
+
+            Member findMember = em.find(Member.class, member1.getId());
+
+            System.out.println("findMember = " + findMember.getAge());
 
             tx.commit();
         } catch (Exception e) {
